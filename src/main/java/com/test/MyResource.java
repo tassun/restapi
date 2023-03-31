@@ -3,6 +3,7 @@ package com.test;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -64,6 +65,18 @@ public class MyResource {
         return JSONObject.toJSONString(map);    	
     }
 
+	//curl -X POST http://localhost:8080/myresource/greet -d "name=John&surname=Doe"
+    @POST
+    @Path("/greet")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String greet(@FormParam("name") String name,@FormParam("surname") String surname) {
+    	System.out.println("name="+name+", surname="+surname);
+    	Map<String,String> map = new HashMap<>();
+    	map.put("message","Greeting, "+name+" "+surname);
+        return JSONObject.toJSONString(map);    	    	
+    }
+    
 	//curl -X POST http://localhost:8080/myresource/greeting -d "name=John&surname=Doe"
     @POST
     @Path("/greeting")
