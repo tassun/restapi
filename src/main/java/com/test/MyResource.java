@@ -163,4 +163,27 @@ public class MyResource {
         return new Hello("Hallo, "+account.getFullName());   	    	    	    	    	    	
     }
     
+	//curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/myresource/hola -d "{\"name\":\"John\",\"surname\":\"Doe\"}"
+	//curl -X POST -H "Accept: application/xml" -H "Content-Type: application/json" http://localhost:8080/myresource/hola -d "{\"name\":\"John\",\"surname\":\"Doe\"}"
+    //if not defined Accept when request it will return first produce format
+    @POST
+    @Path("/hola")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Hello hola(Account account) {
+    	System.out.println("account="+account);
+        return new Hello("Hola, "+account.getFullName());   	    	    	    	    	    	
+    }
+
+	//curl -X POST -H "Content-Type: application/json" http://localhost:8080/myresource/konnichiwa -d "{\"name\":\"John\",\"surname\":\"Doe\"}"
+	//curl -X POST -H "Content-Type: application/xml" http://localhost:8080/myresource/konnichiwa -d "<account><name>John</name><surname>Doe</surname></account>"
+    @POST
+    @Path("/konnichiwa")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Hello konnichiwa(Account account) {
+    	System.out.println("account="+account);
+        return new Hello("Konnichiwa, "+account.getFullName());   	    	    	    	    	    	
+    }
+
 }
